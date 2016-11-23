@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 
 export default function Examples() {
-  return <h3>Examples</h3>
+  return (
+    <div>
+      <h3>Examples</h3>
+      <p>Welcome to examples page!</p>  
+    </div>
+  );  
 }
 
 
