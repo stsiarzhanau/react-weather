@@ -26696,15 +26696,12 @@
 	  var requestUrl = OPEN_WEATHER_MAP_URL + '&q=' + encodedLocation;
 	
 	  return _axios2.default.get(requestUrl).then(function (res) {
-	    if (res.data.message) {
-	      console.log(res);
+	    if (res.data.cod && res.data.message) {
 	      throw new Error(res.data.message);
 	    } else {
-	      console.log(res);
 	      return res.data.main.temp;
 	    }
 	  }, function (res) {
-	    console.log('!' + res);
 	    throw new Error(res.data.message);
 	  });
 	}
@@ -28236,7 +28233,7 @@
 	  return _react2.default.createElement(
 	    'h3',
 	    null,
-	    'Examples Component'
+	    'Examples Component!'
 	  );
 	}
 
