@@ -1,54 +1,53 @@
 import React, { Component } from 'react';
 import WeatherForm from 'WeatherForm';
 import WeatherMessage from 'WeatherMessage';
-import { getTemp } from 'openWeatherMap';
+import getTemp from 'openWeatherMap';
 
 export default class Weather extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
-    }
+      isLoading: false,
+    };
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch(location) {
+    const self = this;
 
-    let self = this;
-
-    
-    this.setState({ isLoading: true });    
+    this.setState({ isLoading: true });
 
     getTemp(location).then(
-      function (temp) {
+      (temp) => {
         self.setState({
-          location: location,
-          temp: temp,
-          isLoading: false
+          location,
+          temp,
+          isLoading: false,
         });
       },
-      function (errorMessage) {
+      (errorMessage) => {
         self.setState({ isLoading: false });
         alert(errorMessage);
-      }
+      },
     );
   }
 
   render() {
-    let { isLoading, temp, location } = this.state;
+    const { isLoading, temp, location } = this.state;
 
     function renderMessage() {
       if (isLoading) {
-        return <p>Fetching weather...</p>
+        return <p>Fetching weather...</p>;
       } else if (temp && location) {
-        return <WeatherMessage temp={temp} location={location} /> 
+        return <WeatherMessage temp={temp} location={location} />;
       }
+      return undefined;
     }
 
     return (
       <div>
         <h3>Weather Component</h3>
-        <WeatherForm onSearch={this.handleSearch} />        
+        <WeatherForm onSearch={this.handleSearch} />
         {renderMessage()}
       </div>
     );

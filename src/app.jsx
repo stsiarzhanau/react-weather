@@ -11,8 +11,8 @@ ReactDOM.render(
     <Route path="/" component={Main}>
       <IndexRoute component={Weather} />
       <Route path="about" component={About} />
-      <Route path="examples" component={Examples} />  
+      <Route path="examples" component={Examples} />
     </Route>
   </Router>,
-  document.getElementById('app')
+  document.getElementById('app'),
 );

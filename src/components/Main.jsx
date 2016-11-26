@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Nav from 'Nav';
 
 export default function Main(props) {
@@ -8,5 +8,9 @@ export default function Main(props) {
       <h2>Main Component</h2>
       {props.children}
     </div>
-  );  
+  );
 }
+
+Main.propTypes = {
+  children: React.PropTypes.node,
+};

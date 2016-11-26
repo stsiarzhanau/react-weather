@@ -1,5 +1,5 @@
-// var webpack = require('webpack'),
-//     path    = require('path');
+// const webpack = require('webpack');
+// const path = require('path');
 
 module.exports = {
   entry: './src/app.jsx',
@@ -17,17 +17,31 @@ module.exports = {
       WeatherMessage: 'src/components/WeatherMessage.jsx',
       About: 'src/components/About.jsx',
       Examples: 'src/components/Examples.jsx',
-      openWeatherMap: 'src/api/openWeatherMap.jsx'      
+      openWeatherMap: 'src/api/openWeatherMap.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
   // devServer: {
   //   inline: true;
-  //   contentBase: './build', 
+  //   contentBase: './build',
   //   port: 3000
   // },
   module: {
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        loader: 'eslint',
+        exclude: /(node_modules|bower_components)/
+      }
+    ],
     loaders: [
+      // code for webpack v2.1.0-beta23 and above
+      // {
+      //   enforce: 'pre',
+      //   test: /\.jsx?$/,
+      //   exclude: /(node_modules|bower_components)/,
+      //   loader: 'eslint'
+      // },
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
@@ -38,7 +52,7 @@ module.exports = {
             'react'
           ]
         }
-      },      
+      },
       // {
       //   test: /\.(png|jpg)$/,
       //   loader: 'url-loader?limit2000'
@@ -46,9 +60,8 @@ module.exports = {
       // {
       //   test: /\.scss$/,
       //   loader: 'style-loader!css-loader!sass-loader'
-      // } 
+      // }
     ]
   },
   devtool: 'source-map'
 }
-
