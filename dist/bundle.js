@@ -26506,7 +26506,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = Nav;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(8);
 	
@@ -26516,44 +26517,118 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function Nav() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h2',
-	      null,
-	      'Nav Component'
-	    ),
-	    _react2.default.createElement(
-	      _reactRouter.IndexLink,
-	      {
-	        to: '/',
-	        activeClassName: 'active',
-	        activeStyle: { fontWeight: 'bold' }
-	      },
-	      'Get Weather'
-	    ),
-	    _react2.default.createElement(
-	      _reactRouter.Link,
-	      {
-	        to: '/about',
-	        activeClassName: 'active',
-	        activeStyle: { fontWeight: 'bold' }
-	      },
-	      'About'
-	    ),
-	    _react2.default.createElement(
-	      _reactRouter.Link,
-	      {
-	        to: '/examples',
-	        activeClassName: 'active',
-	        activeStyle: { fontWeight: 'bold' }
-	      },
-	      'Examples'
-	    )
-	  );
-	}
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Nav = function (_Component) {
+	  _inherits(Nav, _Component);
+	
+	  function Nav(props) {
+	    _classCallCheck(this, Nav);
+	
+	    var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
+	
+	    _this.onSearch = _this.onSearch.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Nav, [{
+	    key: 'onSearch',
+	    value: function onSearch(e) {
+	      e.preventDefault();
+	      alert('Not yet wired up!');
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'top-bar' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'top-bar-left' },
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'menu' },
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'menu-text' },
+	              'React Weather App'
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(
+	                _reactRouter.IndexLink,
+	                {
+	                  to: '/',
+	                  activeClassName: 'active',
+	                  activeStyle: { fontWeight: 'bold' }
+	                },
+	                'Get Weather'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                {
+	                  to: '/about',
+	                  activeClassName: 'active',
+	                  activeStyle: { fontWeight: 'bold' }
+	                },
+	                'About'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                {
+	                  to: '/examples',
+	                  activeClassName: 'active',
+	                  activeStyle: { fontWeight: 'bold' }
+	                },
+	                'Examples'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'top-bar-right' },
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: this.onSearch },
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'menu' },
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement('input', { type: 'search', placeholder: 'Enter city name' })
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement('input', { type: 'submit', className: 'button', value: 'Get Weather' })
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Nav;
+	}(_react.Component);
+	
+	exports.default = Nav;
 
 /***/ },
 /* 242 */
