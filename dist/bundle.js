@@ -26485,11 +26485,6 @@
 	    null,
 	    _react2.default.createElement(_Nav2.default, null),
 	    _react2.default.createElement(
-	      'h2',
-	      null,
-	      'Main Component'
-	    ),
-	    _react2.default.createElement(
 	      'div',
 	      { className: 'row' },
 	      _react2.default.createElement(
@@ -26720,7 +26715,7 @@
 	        if (isLoading) {
 	          return _react2.default.createElement(
 	            'p',
-	            null,
+	            { className: 'text-center' },
 	            'Fetching weather...'
 	          );
 	        } else if (temp && location) {
@@ -26733,9 +26728,9 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Weather Component'
+	          'h1',
+	          { className: 'text-center' },
+	          'Get Weather'
 	        ),
 	        _react2.default.createElement(_WeatherForm2.default, { onSearch: this.handleSearch }),
 	        renderMessage()
@@ -26811,7 +26806,7 @@
 	        }),
 	        _react2.default.createElement(
 	          'button',
-	          null,
+	          { className: 'button expanded hollow' },
 	          'Get Weather'
 	        )
 	      );
@@ -26832,7 +26827,7 @@
 /* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -26850,13 +26845,13 @@
 	      location = _ref.location;
 	
 	  return _react2.default.createElement(
-	    'p',
-	    null,
-	    'It is ',
+	    "p",
+	    { className: "text-center" },
+	    "It is ",
 	    temp,
-	    ' in ',
+	    " in ",
 	    location,
-	    '.'
+	    "."
 	  );
 	}
 	

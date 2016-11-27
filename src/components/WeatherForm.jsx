@@ -23,7 +23,7 @@ export default class WeatherForm extends Component {
           placeholder="Enter city name"
           ref={(c) => { this.location = c; }}
         />
-        <button>Get Weather</button>
+        <button className="button expanded hollow">Get Weather</button>
       </form>
     );
   }
