@@ -5,12 +5,10 @@ import Main from 'Main';
 import Weather from 'Weather';
 import About from 'About';
 import Examples from 'Examples';
+import 'foundation-sites/dist/foundation.min.css';
+import './styles/app.scss';
 
-// Load foundation
-require('style!css!foundation-sites/dist/foundation.min.css');
-// App css
-require('style!css!appStyles');
-
+// What for?
 $(document).foundation();
 
 ReactDOM.render(

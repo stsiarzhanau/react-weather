@@ -35,10 +35,14 @@ module.exports = {
       //   test: /\.(png|jpg)$/,
       //   loader: 'url-loader?limit2000',
       // },
-      // {
-      //   test: /\.scss$/,
-      //   loader: 'style-loader!css-loader!sass-loader',
-      // },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass'],
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css'],
+      },
     ],
     preLoaders: [
       {
@@ -59,10 +63,10 @@ module.exports = {
       Examples: 'src/components/Examples.jsx',
       ErrorModal: 'src/components/ErrorModal.jsx',
       openWeatherMap: 'src/api/openWeatherMap.jsx',
-      appStyles: 'src/styles/app.css',
+      appStyles: 'src/styles/app.scss',
     },
     root: __dirname,
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx', '.scss'],
   },
   externals: {
     jquery: 'jQuery',

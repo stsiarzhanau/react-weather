@@ -17,6 +17,10 @@ module.exports = {
       }
     }
   },
+  globals: {
+    $: true,
+    Foundation: true,
+  },
   rules: {
   }
 }
