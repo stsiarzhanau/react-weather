@@ -28384,7 +28384,7 @@
 /* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -28399,17 +28399,28 @@
 	
 	function About() {
 	  return _react2.default.createElement(
-	    'div',
+	    "div",
 	    null,
 	    _react2.default.createElement(
-	      'h3',
-	      null,
-	      'About'
+	      "h1",
+	      { className: "text-center" },
+	      "About"
 	    ),
 	    _react2.default.createElement(
-	      'p',
+	      "p",
 	      null,
-	      'Welcome to the about page!'
+	      "This is a simple weather app build on React. It shows temperature in any city you ask for."
+	    ),
+	    _react2.default.createElement(
+	      "p",
+	      null,
+	      "It uses ",
+	      _react2.default.createElement(
+	        "a",
+	        { href: "https://openweathermap.org/" },
+	        " Open Weather Map "
+	      ),
+	      "web service API to search for weather data by city name."
 	    )
 	  );
 	}
