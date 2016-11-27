@@ -9,7 +9,12 @@ export default class Nav extends Component {
 
   onSearch(e) {
     e.preventDefault();
-    alert('Not yet wired up!');
+    const location = this.search.value;
+    const encodedLocation = encodeURIComponent(location);
+    if (location.length > 0) {
+      this.search.value = '';
+      window.location.hash = `#/?location=${encodedLocation}`;
+    }
   }
 
   render() {
@@ -45,7 +50,11 @@ export default class Nav extends Component {
           <form onSubmit={this.onSearch}>
             <ul className="menu">
               <li>
-                <input type="search" placeholder="Enter city name" />
+                <input
+                  type="search"
+                  placeholder="Enter city name"
+                  ref={(c) => { this.search = c; }}
+                />
               </li>
               <li>
                 <input type="submit" className="button" value="Get Weather" />

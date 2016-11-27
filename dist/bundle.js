@@ -26545,11 +26545,18 @@
 	    key: 'onSearch',
 	    value: function onSearch(e) {
 	      e.preventDefault();
-	      alert('Not yet wired up!');
+	      var location = this.search.value;
+	      var encodedLocation = encodeURIComponent(location);
+	      if (location.length > 0) {
+	        this.search.value = '';
+	        window.location.hash = '#/?location=' + encodedLocation;
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'top-bar' },
@@ -26617,7 +26624,13 @@
 	              _react2.default.createElement(
 	                'li',
 	                null,
-	                _react2.default.createElement('input', { type: 'search', placeholder: 'Enter city name' })
+	                _react2.default.createElement('input', {
+	                  type: 'search',
+	                  placeholder: 'Enter city name',
+	                  ref: function ref(c) {
+	                    _this2.search = c;
+	                  }
+	                })
 	              ),
 	              _react2.default.createElement(
 	                'li',
@@ -26693,13 +26706,35 @@
 	  }
 	
 	  _createClass(Weather, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var location = this.props.location.query.location;
+	
+	      if (location && location.length > 0) {
+	        this.handleSearch(location);
+	        window.location.hash = '#/';
+	      }
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var location = nextProps.location.query.location;
+	
+	      if (location && location.length > 0) {
+	        this.handleSearch(location);
+	        window.location.hash = '#/';
+	      }
+	    }
+	  }, {
 	    key: 'handleSearch',
 	    value: function handleSearch(location) {
 	      var self = this;
 	
 	      this.setState({
 	        isLoading: true,
-	        errorMessage: undefined
+	        errorMessage: undefined,
+	        location: undefined,
+	        temp: undefined
 	      });
 	
 	      (0, _openWeatherMap2.default)(location).then(function (temp) {
@@ -26764,6 +26799,19 @@
 	}(_react.Component);
 	
 	exports.default = Weather;
+	
+	
+	Weather.propTypes = {
+	  location: _react2.default.PropTypes.shape({
+	    action: _react2.default.PropTypes.string,
+	    hash: _react2.default.PropTypes.string,
+	    key: _react2.default.PropTypes.array,
+	    pathname: _react2.default.PropTypes.string,
+	    query: _react2.default.PropTypes.object,
+	    search: _react2.default.PropTypes.string,
+	    state: _react2.default.PropTypes.array
+	  })
+	};
 
 /***/ },
 /* 243 */

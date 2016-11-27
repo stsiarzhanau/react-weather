@@ -15,12 +15,32 @@ export default class Weather extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  componentDidMount() {
+    const location = this.props.location.query.location;
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      window.location.hash = '#/';
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const location = nextProps.location.query.location;
+
+    if (location && location.length > 0) {
+      this.handleSearch(location);
+      window.location.hash = '#/';
+    }
+  }
+
   handleSearch(location) {
     const self = this;
 
     this.setState({
       isLoading: true,
       errorMessage: undefined,
+      location: undefined,
+      temp: undefined,
     });
 
     getTemp(location).then(
@@ -69,3 +89,15 @@ export default class Weather extends Component {
     );
   }
 }
+
+Weather.propTypes = {
+  location: React.PropTypes.shape({
+    action: React.PropTypes.string,
+    hash: React.PropTypes.string,
+    key: React.PropTypes.array,
+    pathname: React.PropTypes.string,
+    query: React.PropTypes.object,
+    search: React.PropTypes.string,
+    state: React.PropTypes.array,
+  }),
+};
