@@ -19,7 +19,7 @@ export default class WeatherForm extends Component {
     return (
       <form onSubmit={this.onFormSubmit}>
         <input
-          type="text"
+          type="search"
           placeholder="Enter city name"
           ref={(c) => { this.location = c; }}
         />
