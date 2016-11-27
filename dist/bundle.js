@@ -26489,7 +26489,15 @@
 	      null,
 	      'Main Component'
 	    ),
-	    props.children
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'medium-6 large-4 columns small-centered' },
+	        props.children
+	      )
+	    )
 	  );
 	}
 	
@@ -28421,6 +28429,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(185);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Examples() {
@@ -28428,14 +28438,36 @@
 	    'div',
 	    null,
 	    _react2.default.createElement(
-	      'h3',
-	      null,
+	      'h1',
+	      { className: 'text-center' },
 	      'Examples'
 	    ),
 	    _react2.default.createElement(
 	      'p',
 	      null,
-	      'Welcome to examples page!'
+	      'Here are a few example locations to try out:'
+	    ),
+	    _react2.default.createElement(
+	      'ol',
+	      null,
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/?location=Philadelphia' },
+	          'Philadelphia, PA'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'li',
+	        null,
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/?location=Rio' },
+	          'Rio, Brazil'
+	        )
+	      )
 	    )
 	  );
 	}
