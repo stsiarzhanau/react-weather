@@ -26805,11 +26805,11 @@
 	  location: _react2.default.PropTypes.shape({
 	    action: _react2.default.PropTypes.string,
 	    hash: _react2.default.PropTypes.string,
-	    key: _react2.default.PropTypes.array,
+	    key: _react2.default.PropTypes.string,
 	    pathname: _react2.default.PropTypes.string,
 	    query: _react2.default.PropTypes.object,
 	    search: _react2.default.PropTypes.string,
-	    state: _react2.default.PropTypes.array
+	    state: _react2.default.PropTypes.string
 	  })
 	};
 

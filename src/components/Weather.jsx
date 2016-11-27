@@ -94,10 +94,10 @@ Weather.propTypes = {
   location: React.PropTypes.shape({
     action: React.PropTypes.string,
     hash: React.PropTypes.string,
-    key: React.PropTypes.array,
+    key: React.PropTypes.string,
     pathname: React.PropTypes.string,
     query: React.PropTypes.object,
     search: React.PropTypes.string,
-    state: React.PropTypes.array,
+    state: React.PropTypes.string,
   }),
 };
