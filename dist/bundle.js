@@ -113,17 +113,17 @@
 	
 	var _Weather2 = _interopRequireDefault(_Weather);
 	
-	var _About = __webpack_require__(272);
+	var _About = __webpack_require__(276);
 	
 	var _About2 = _interopRequireDefault(_About);
 	
-	var _Examples = __webpack_require__(273);
+	var _Examples = __webpack_require__(277);
 	
 	var _Examples2 = _interopRequireDefault(_Examples);
 	
-	__webpack_require__(274);
-	
 	__webpack_require__(278);
+	
+	__webpack_require__(282);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26677,7 +26677,7 @@
 	
 	var _ErrorModal2 = _interopRequireDefault(_ErrorModal);
 	
-	var _openWeatherMap = __webpack_require__(246);
+	var _openWeatherMap = __webpack_require__(250);
 	
 	var _openWeatherMap2 = _interopRequireDefault(_openWeatherMap);
 	
@@ -26946,6 +26946,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _server = __webpack_require__(246);
+	
+	var _server2 = _interopRequireDefault(_server);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26953,6 +26957,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import ReactDOM from 'react-dom';
+	
 	
 	var ErrorModal = function (_Component) {
 	  _inherits(ErrorModal, _Component);
@@ -26966,20 +26972,17 @@
 	  _createClass(ErrorModal, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var modal = new Foundation.Reveal($('#error-modal'));
-	      modal.open();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
+	      var _this2 = this;
+	
 	      var _props = this.props,
 	          title = _props.title,
 	          message = _props.message;
 	
-	
-	      return _react2.default.createElement(
+	      var modalMarkup = _react2.default.createElement(
 	        'div',
-	        { id: 'error-modal', className: 'tiny reveal text-center', 'data-reveal': '' },
+	        { id: 'error-modal', className: 'tiny reveal text-center', 'data-reveal': '', ref: function ref(node) {
+	            _this2.node = node;
+	          } },
 	        _react2.default.createElement(
 	          'h4',
 	          null,
@@ -27005,6 +27008,16 @@
 	          )
 	        )
 	      );
+	
+	      var $modal = $(_server2.default.renderToString(modalMarkup));
+	      $(this.node).html($modal);
+	      var modal = new Foundation.Reveal($('#error-modal'));
+	      modal.open();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', null);
 	    }
 	  }]);
 	
@@ -27030,12 +27043,172 @@
 
 	'use strict';
 	
+	module.exports = __webpack_require__(247);
+
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var ReactDefaultInjection = __webpack_require__(45);
+	var ReactServerRendering = __webpack_require__(248);
+	var ReactVersion = __webpack_require__(178);
+	
+	ReactDefaultInjection.inject();
+	
+	var ReactDOMServer = {
+	  renderToString: ReactServerRendering.renderToString,
+	  renderToStaticMarkup: ReactServerRendering.renderToStaticMarkup,
+	  version: ReactVersion
+	};
+	
+	module.exports = ReactDOMServer;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(42);
+	
+	var React = __webpack_require__(9);
+	var ReactDOMContainerInfo = __webpack_require__(174);
+	var ReactDefaultBatchingStrategy = __webpack_require__(147);
+	var ReactInstrumentation = __webpack_require__(69);
+	var ReactMarkupChecksum = __webpack_require__(176);
+	var ReactReconciler = __webpack_require__(66);
+	var ReactServerBatchingStrategy = __webpack_require__(249);
+	var ReactServerRenderingTransaction = __webpack_require__(140);
+	var ReactUpdates = __webpack_require__(63);
+	
+	var emptyObject = __webpack_require__(27);
+	var instantiateReactComponent = __webpack_require__(125);
+	var invariant = __webpack_require__(15);
+	
+	var pendingTransactions = 0;
+	
+	/**
+	 * @param {ReactElement} element
+	 * @return {string} the HTML markup
+	 */
+	function renderToStringImpl(element, makeStaticMarkup) {
+	  var transaction;
+	  try {
+	    ReactUpdates.injection.injectBatchingStrategy(ReactServerBatchingStrategy);
+	
+	    transaction = ReactServerRenderingTransaction.getPooled(makeStaticMarkup);
+	
+	    pendingTransactions++;
+	
+	    return transaction.perform(function () {
+	      var componentInstance = instantiateReactComponent(element, true);
+	      var markup = ReactReconciler.mountComponent(componentInstance, transaction, null, ReactDOMContainerInfo(), emptyObject, 0 /* parentDebugID */
+	      );
+	      if (process.env.NODE_ENV !== 'production') {
+	        ReactInstrumentation.debugTool.onUnmountComponent(componentInstance._debugID);
+	      }
+	      if (!makeStaticMarkup) {
+	        markup = ReactMarkupChecksum.addChecksumToMarkup(markup);
+	      }
+	      return markup;
+	    }, null);
+	  } finally {
+	    pendingTransactions--;
+	    ReactServerRenderingTransaction.release(transaction);
+	    // Revert to the DOM batching strategy since these two renderers
+	    // currently share these stateful modules.
+	    if (!pendingTransactions) {
+	      ReactUpdates.injection.injectBatchingStrategy(ReactDefaultBatchingStrategy);
+	    }
+	  }
+	}
+	
+	/**
+	 * Render a ReactElement to its initial HTML. This should only be used on the
+	 * server.
+	 * See https://facebook.github.io/react/docs/top-level-api.html#reactdomserver.rendertostring
+	 */
+	function renderToString(element) {
+	  !React.isValidElement(element) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'renderToString(): You must pass a valid ReactElement.') : _prodInvariant('46') : void 0;
+	  return renderToStringImpl(element, false);
+	}
+	
+	/**
+	 * Similar to renderToString, except this doesn't create extra DOM attributes
+	 * such as data-react-id that React uses internally.
+	 * See https://facebook.github.io/react/docs/top-level-api.html#reactdomserver.rendertostaticmarkup
+	 */
+	function renderToStaticMarkup(element) {
+	  !React.isValidElement(element) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'renderToStaticMarkup(): You must pass a valid ReactElement.') : _prodInvariant('47') : void 0;
+	  return renderToStringImpl(element, true);
+	}
+	
+	module.exports = {
+	  renderToString: renderToString,
+	  renderToStaticMarkup: renderToStaticMarkup
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+
+/***/ },
+/* 249 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2014-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 */
+	
+	'use strict';
+	
+	var ReactServerBatchingStrategy = {
+	  isBatchingUpdates: false,
+	  batchedUpdates: function (callback) {
+	    // Don't do anything here. During the server rendering we don't want to
+	    // schedule any updates. We will simply ignore them.
+	  }
+	};
+	
+	module.exports = ReactServerBatchingStrategy;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = getTemp;
 	
-	var _axios = __webpack_require__(247);
+	var _axios = __webpack_require__(251);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -27059,20 +27232,20 @@
 	}
 
 /***/ },
-/* 247 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(248);
+	module.exports = __webpack_require__(252);
 
 /***/ },
-/* 248 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
-	var bind = __webpack_require__(250);
-	var Axios = __webpack_require__(251);
+	var utils = __webpack_require__(253);
+	var bind = __webpack_require__(254);
+	var Axios = __webpack_require__(255);
 	
 	/**
 	 * Create an instance of Axios
@@ -27105,15 +27278,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(269);
-	axios.CancelToken = __webpack_require__(270);
-	axios.isCancel = __webpack_require__(266);
+	axios.Cancel = __webpack_require__(273);
+	axios.CancelToken = __webpack_require__(274);
+	axios.isCancel = __webpack_require__(270);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(271);
+	axios.spread = __webpack_require__(275);
 	
 	module.exports = axios;
 	
@@ -27122,12 +27295,12 @@
 
 
 /***/ },
-/* 249 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var bind = __webpack_require__(250);
+	var bind = __webpack_require__(254);
 	
 	/*global toString:true*/
 	
@@ -27427,7 +27600,7 @@
 
 
 /***/ },
-/* 250 */
+/* 254 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27444,17 +27617,17 @@
 
 
 /***/ },
-/* 251 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var defaults = __webpack_require__(252);
-	var utils = __webpack_require__(249);
-	var InterceptorManager = __webpack_require__(263);
-	var dispatchRequest = __webpack_require__(264);
-	var isAbsoluteURL = __webpack_require__(267);
-	var combineURLs = __webpack_require__(268);
+	var defaults = __webpack_require__(256);
+	var utils = __webpack_require__(253);
+	var InterceptorManager = __webpack_require__(267);
+	var dispatchRequest = __webpack_require__(268);
+	var isAbsoluteURL = __webpack_require__(271);
+	var combineURLs = __webpack_require__(272);
 	
 	/**
 	 * Create a new instance of Axios
@@ -27535,13 +27708,13 @@
 
 
 /***/ },
-/* 252 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(249);
-	var normalizeHeaderName = __webpack_require__(253);
+	var utils = __webpack_require__(253);
+	var normalizeHeaderName = __webpack_require__(257);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -27558,10 +27731,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(254);
+	    adapter = __webpack_require__(258);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(254);
+	    adapter = __webpack_require__(258);
 	  }
 	  return adapter;
 	}
@@ -27628,12 +27801,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ },
-/* 253 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
+	var utils = __webpack_require__(253);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -27646,18 +27819,18 @@
 
 
 /***/ },
-/* 254 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(249);
-	var settle = __webpack_require__(255);
-	var buildURL = __webpack_require__(258);
-	var parseHeaders = __webpack_require__(259);
-	var isURLSameOrigin = __webpack_require__(260);
-	var createError = __webpack_require__(256);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(261);
+	var utils = __webpack_require__(253);
+	var settle = __webpack_require__(259);
+	var buildURL = __webpack_require__(262);
+	var parseHeaders = __webpack_require__(263);
+	var isURLSameOrigin = __webpack_require__(264);
+	var createError = __webpack_require__(260);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(265);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -27753,7 +27926,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(262);
+	      var cookies = __webpack_require__(266);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -27830,12 +28003,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ },
-/* 255 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var createError = __webpack_require__(256);
+	var createError = __webpack_require__(260);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -27861,12 +28034,12 @@
 
 
 /***/ },
-/* 256 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(257);
+	var enhanceError = __webpack_require__(261);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -27884,7 +28057,7 @@
 
 
 /***/ },
-/* 257 */
+/* 261 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27909,12 +28082,12 @@
 
 
 /***/ },
-/* 258 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
+	var utils = __webpack_require__(253);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -27983,12 +28156,12 @@
 
 
 /***/ },
-/* 259 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
+	var utils = __webpack_require__(253);
 	
 	/**
 	 * Parse headers into an object
@@ -28026,12 +28199,12 @@
 
 
 /***/ },
-/* 260 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
+	var utils = __webpack_require__(253);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28100,7 +28273,7 @@
 
 
 /***/ },
-/* 261 */
+/* 265 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28142,12 +28315,12 @@
 
 
 /***/ },
-/* 262 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
+	var utils = __webpack_require__(253);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -28201,12 +28374,12 @@
 
 
 /***/ },
-/* 263 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
+	var utils = __webpack_require__(253);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -28259,15 +28432,15 @@
 
 
 /***/ },
-/* 264 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
-	var transformData = __webpack_require__(265);
-	var isCancel = __webpack_require__(266);
-	var defaults = __webpack_require__(252);
+	var utils = __webpack_require__(253);
+	var transformData = __webpack_require__(269);
+	var isCancel = __webpack_require__(270);
+	var defaults = __webpack_require__(256);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -28344,12 +28517,12 @@
 
 
 /***/ },
-/* 265 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(249);
+	var utils = __webpack_require__(253);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -28370,7 +28543,7 @@
 
 
 /***/ },
-/* 266 */
+/* 270 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28381,7 +28554,7 @@
 
 
 /***/ },
-/* 267 */
+/* 271 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28401,7 +28574,7 @@
 
 
 /***/ },
-/* 268 */
+/* 272 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28419,7 +28592,7 @@
 
 
 /***/ },
-/* 269 */
+/* 273 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28444,12 +28617,12 @@
 
 
 /***/ },
-/* 270 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(269);
+	var Cancel = __webpack_require__(273);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -28507,7 +28680,7 @@
 
 
 /***/ },
-/* 271 */
+/* 275 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28540,7 +28713,7 @@
 
 
 /***/ },
-/* 272 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28585,7 +28758,7 @@
 	}
 
 /***/ },
-/* 273 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28643,16 +28816,16 @@
 	}
 
 /***/ },
-/* 274 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(275);
+	var content = __webpack_require__(279);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(277)(content, {});
+	var update = __webpack_require__(281)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28669,10 +28842,10 @@
 	}
 
 /***/ },
-/* 275 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(276)();
+	exports = module.exports = __webpack_require__(280)();
 	// imports
 	
 	
@@ -28683,7 +28856,7 @@
 
 
 /***/ },
-/* 276 */
+/* 280 */
 /***/ function(module, exports) {
 
 	/*
@@ -28739,7 +28912,7 @@
 
 
 /***/ },
-/* 277 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -28991,16 +29164,16 @@
 
 
 /***/ },
-/* 278 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(279);
+	var content = __webpack_require__(283);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(277)(content, {});
+	var update = __webpack_require__(281)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -29017,10 +29190,10 @@
 	}
 
 /***/ },
-/* 279 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(276)();
+	exports = module.exports = __webpack_require__(280)();
 	// imports
 	
 	

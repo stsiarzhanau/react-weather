@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const OPEN_WEATHER_MAP_URL = 'http://api.openweathermap.org/data/2.5/weather?appid=8f698303d975e79d7d01006ba1f09847&units=metric';
 
-export default function getTemp(location) {
+function getTemp(location) {
   const encodedLocation = encodeURIComponent(location);
   const requestUrl = `${OPEN_WEATHER_MAP_URL}&q=${encodedLocation}`;
 
@@ -19,3 +19,5 @@ export default function getTemp(location) {
     },
   );
 }
+
+export default getTemp;

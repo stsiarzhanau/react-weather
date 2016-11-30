@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, IndexLink } from 'react-router';
 
-export default class Nav extends Component {
+class Nav extends Component {
   constructor(props) {
     super(props);
     this.onSearch = this.onSearch.bind(this);
@@ -66,3 +66,5 @@ export default class Nav extends Component {
     );
   }
 }
+
+export default Nav;

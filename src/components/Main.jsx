@@ -1,7 +1,11 @@
 import React from 'react';
 import Nav from 'Nav';
 
-export default function Main(props) {
+Main.propTypes = {
+  children: React.PropTypes.node,
+};
+
+function Main(props) {
   return (
     <div>
       <Nav />
@@ -14,6 +18,6 @@ export default function Main(props) {
   );
 }
 
-Main.propTypes = {
-  children: React.PropTypes.node,
-};
+Main.propTypes = propTypes;
+
+export default Main;

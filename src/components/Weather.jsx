@@ -4,8 +4,19 @@ import WeatherMessage from 'WeatherMessage';
 import ErrorModal from 'ErrorModal';
 import getTemp from 'openWeatherMap';
 
+Weather.propTypes = {
+  location: React.PropTypes.shape({
+    action: React.PropTypes.string,
+    hash: React.PropTypes.string,
+    key: React.PropTypes.string,
+    pathname: React.PropTypes.string,
+    query: React.PropTypes.object,
+    search: React.PropTypes.string,
+    state: React.PropTypes.string,
+  }),
+};
 
-export default class Weather extends Component {
+class Weather extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,14 +101,6 @@ export default class Weather extends Component {
   }
 }
 
-Weather.propTypes = {
-  location: React.PropTypes.shape({
-    action: React.PropTypes.string,
-    hash: React.PropTypes.string,
-    key: React.PropTypes.string,
-    pathname: React.PropTypes.string,
-    query: React.PropTypes.object,
-    search: React.PropTypes.string,
-    state: React.PropTypes.string,
-  }),
-};
+Weather.propTypes = propTypes;
+
+export default Weather;

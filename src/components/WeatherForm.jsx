@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
-export default class WeatherForm extends Component {
+WeatherForm.propTypes = {
+  onSearch: React.PropTypes.func,
+};
+
+class WeatherForm extends Component {
   constructor(props) {
     super(props);
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -29,6 +33,6 @@ export default class WeatherForm extends Component {
   }
 }
 
-WeatherForm.propTypes = {
-  onSearch: React.PropTypes.func,
-};
+WeatherForm.propTypes = propTypes;
+
+export default WeatherForm;

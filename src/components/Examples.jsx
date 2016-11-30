@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-export default function Examples() {
+function Examples() {
   return (
     <div>
       <h1 className="text-center page-title">Examples</h1>
@@ -17,3 +17,5 @@ export default function Examples() {
     </div>
   );
 }
+
+export default Examples;

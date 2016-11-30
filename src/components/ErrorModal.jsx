@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
+// import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
 
-export default class ErrorModal extends Component {
+const defaultProps = {
+  title: 'Error',
+};
+
+const propTypes = {
+  title: React.PropTypes.string,
+  message: React.PropTypes.string.isRequired,
+};
+
+class ErrorModal extends Component {
   componentDidMount() {
-    const modal = new Foundation.Reveal($('#error-modal'));
-    modal.open();
-  }
-
-  render() {
     const { title, message } = this.props;
-
-    return (
-      <div id="error-modal" className="tiny reveal text-center" data-reveal="">
+    const modalMarkup = (
+      <div
+        id="error-modal"
+        className="tiny reveal text-center"
+        data-reveal=""
+        ref={(c) => { this.node = c; }} >
         <h4>{title}</h4>
         <p>{message}</p>
         <p>
@@ -24,14 +33,21 @@ export default class ErrorModal extends Component {
         </p>
       </div>
     );
+
+    const $modal = $(ReactDOMServer.renderToString(modalMarkup));
+    $(this.node).html($modal);
+    const modal = new Foundation.Reveal($('#error-modal'));
+    modal.open();
+  }
+
+  render() {
+    return (
+      <div />
+    );
   }
 }
 
-ErrorModal.defaultProps = {
-  title: 'Error',
-};
+ErrorModal.defaultProps = defaultProps;
+ErrorModal.propTypes = propTypes;
 
-ErrorModal.propTypes = {
-  title: React.PropTypes.string,
-  message: React.PropTypes.string.isRequired,
-};
+export default ErrorModal;
